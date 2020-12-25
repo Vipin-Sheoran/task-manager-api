@@ -1,16 +1,9 @@
-const express=require('express')    //express for using app.use,app.get and other models
-require('./db/mongoose')            //this is for connecting with database and store data in mongoose db
-const Task=require('./models/task')   
-const User = require('./models/user')    // for connectint user in models which consist of necessary conditions for diff. objects
-const userRouter=require('./routers/user')    //userRouter is for using new router from different files
-const taskRouter=require('./routers/task')
-const auth = require('./middleware/auth')
-const app=express()
-
-
-
+const app=require('./app')
 
 const port=process.env.PORT         //for running localhost:3000 or any provided route
+const path=require('path')
+const publicDirectoryPath=path.join(__dirname,'../public')
+app.use(express.static(publicDirectoryPath)) 
 
 // app.use((req,res,next)=>{
 //     if(req.method==='GET'){
@@ -52,17 +45,6 @@ const port=process.env.PORT         //for running localhost:3000 or any provided
 // },(error,req,res,next)=>{
 // res.status(400).send({error:error.message})
 // })
-
-app.use(express.json())    //used for sending json response
-app.use(userRouter)
-app.use(taskRouter) 
-
-
-
-
-
-
-
 
 app.listen(port,()=>{
     console.log('server is up on port '+port)
